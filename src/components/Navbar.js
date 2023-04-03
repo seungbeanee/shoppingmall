@@ -2,8 +2,13 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { authenticateAction } from '../redux/actions/authenticateAction'
 
-const Navbar = ({authenticate, setAuthenticate}) => {
+const Navbar = () => {
+    const authenticate = useSelector((state) => state.auth.authenticate);
+    const id = useSelector((state) => state.auth.id);
+    const dispatch = useDispatch();
     const menuList = [
                         {
                             id:0,
@@ -55,7 +60,7 @@ const Navbar = ({authenticate, setAuthenticate}) => {
                     <div>로그인</div>
                 </div>
             ) : (
-                <div className="login-button" onClick={() => setAuthenticate(false)}>
+                <div className="login-button" onClick={() => dispatch(authenticateAction.logout(id))}>
                     <FontAwesomeIcon icon={faUser} />
                     <div>로그아웃</div>
                 </div>

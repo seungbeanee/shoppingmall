@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Dropdown, Row } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { productAction } from '../redux/actions/productAction';
 
 const ProductDetail = () => {
     let {id} = useParams();
-    const [product, setProduct] = useState(null);
-    const getProductDetail = async () => {
-        let data = await fetch(`http://localhost:5000/products/${id}`).then((res) => res.json());
-        setProduct(data);
-    }
+    const product = useSelector((state) => state.product.selectedItem);
+    const dispatch = useDispatch();
+    const getProductDetail = async () => { 
+        dispatch(productAction.getProductDetail(id)); 
+    };
     useEffect(()=>{
         getProductDetail();
     },[])
